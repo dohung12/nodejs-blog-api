@@ -1,0 +1,322 @@
+openapi: 3.0.0
+info:
+  title: Nodejs Blog API
+  contact: {}
+  version: '1.0'
+servers:
+  - url: https://nodejs-blog-api-774.herokuapp.com/api/v1
+    variables: {}
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register User
+      operationId: RegisterUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterUserRequest'
+            example:
+              username: peterpan
+              password: 123123123
+              confirmedPassword: 123123123
+
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login User
+      operationId: LoginUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginUserRequest'
+            example:
+              username: peterpan
+              password: 123123123
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /blog:
+    post:
+      tags:
+        - Blog
+      summary: Create Blog
+      operationId: CreateBlog
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBlogRequest'
+            example:
+              title: An eye-catch blog title
+              content: Blog content
+              publish: true
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    get:
+      tags:
+        - Blog
+      summary: Get All Blogs
+      operationId: GetAllBlogs
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /blog/{blogId}:
+    parameters:
+      - in: path
+        name: blogId
+        schema:
+          type: string
+        required: true
+        description: The Blog ID
+    get:
+      tags:
+        - Blog
+      summary: Get Single Blog
+      operationId: GetSingleBlog
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    put:
+      tags:
+        - Blog
+      summary: Update Blog
+      operationId: UpdateBlog
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBlogRequest'
+            example:
+              title: An more eye-catching blog title
+              content: Blog content
+              publish: false
+
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+        - Blog
+      summary: Delete Blog
+      operationId: DeleteBlog
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /blog/{blogId}/message:
+    parameters:
+      - in: path
+        name: blogId
+        schema:
+          type: string
+        required: true
+        description: The Blog ID
+    post:
+      tags:
+        - Blog's Message
+      summary: Create Blog's Message Comment
+      operationId: CreateBlogComment
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBlogMessageRequest'
+            example:
+              content: Blog message content
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /blog/{blogId}/message/{messageId}:
+    parameters:
+      - in: path
+        name: blogId
+        schema:
+          type: string
+        required: true
+        description: The Blog ID
+      - in: path
+        name: messageId
+        schema:
+          type: string
+        required: true
+        description: The Blog's Message ID
+    put:
+      tags:
+        - Blog's Message
+      summary: Update Blog Message
+      operationId: UpdateBlogMessage
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBlogMessageRequest'
+            example:
+              content: Blog's message content
+
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+        - Blog's Message
+      summary: Delete Blog Message
+      operationId: DeleteBlogMessage
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+
+components:
+  schemas:
+    RegisterUserRequest:
+      title: RegisterUserRequest
+      required:
+        - username
+        - password
+        - confirmedPassword
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        confirmedPassword:
+          type: string
+      example:
+        username: peterpan
+        password: 123123123
+        confirmedPassword: 123123123
+    LoginUserRequest:
+      title: LoginUserRequest
+      required:
+        - username
+        - password
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      example:
+        username: peterpan
+        password: 123123123
+    CreateBlogRequest:
+      title: CreateBlogRequest
+      required:
+        - title
+        - content
+        - publish
+      type: object
+      properties:
+        title:
+          type: string
+        content:
+          type: string
+        publish:
+          type: boolean
+      example:
+        title: An eye-catch blog title
+        content: Blog content
+        publish: true
+    UpdateBlogRequest:
+      title: UpdateBlogRequest
+      required:
+        - title
+        - content
+        - publish
+      type: object
+      properties:
+        title:
+          type: string
+        content:
+          type: string
+        publish:
+          type: boolean
+      example:
+        title: An more eye-catching blog title
+        content: Blog content
+        publish: false
+    CreateBlogMessageRequest:
+      title: CreateBlogMessageRequest
+      required:
+        - content
+      type: object
+      properties:
+        content:
+          type: string
+      example:
+        content: Blog post comment content
+    UpdateBlogMessageRequest:
+      title: UpdateBlogMessageRequest
+      required:
+        - content
+      type: object
+      properties:
+        content:
+          type: string
+      example:
+        content: A new blog message
+  securitySchemes:
+    httpBearer:
+      type: http
+      scheme: bearer
+security:
+  - httpBearer: []
+tags:
+  - name: Auth
+    description: ''
+  - name: Blog
+    description: ''
+  - name: Blog's Message
+    description: ''
